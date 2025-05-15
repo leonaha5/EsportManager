@@ -57,6 +57,7 @@ public class App : Application
                                         Username="postgres";
                                         Password="postgres";
                                         Database="esport_manager_db";
+                                        Include Error Detail=true;
                                         """;
         services.AddSingleton<IPlayerCommands, PlayerCommands>(provider => new PlayerCommands(connectionString));
 

@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using EsportManager.Models;
 using EsportManager.Services;
 
@@ -11,6 +12,7 @@ public partial class AddPlayerWindowModel : ObservableObject
 {
     private readonly IPlayerService _playerService;
     private Window _addPlayerWindow;
+
     [ObservableProperty] private string _game;
     [ObservableProperty] private string _nickname;
 
@@ -33,7 +35,7 @@ public partial class AddPlayerWindowModel : ObservableObject
 
         var newPlayer = new Player
         {
-            Nickame = Nickname,
+            Nickname = Nickname,
             SkillLevel = 0,
             StressLevel = 0,
             FatigueLevel = 0,
@@ -44,6 +46,10 @@ public partial class AddPlayerWindowModel : ObservableObject
 
         await _playerService.AddPlayerAsync(newPlayer);
 
+        WeakReferenceMessenger.Default.Send(new PlayerAddedMessage());
+
         _addPlayerWindow.Close();
     }
+
+    public class PlayerAddedMessage;
 }

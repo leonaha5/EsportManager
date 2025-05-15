@@ -8,6 +8,5 @@ public partial class PlayersView : UserControl
     public PlayersView()
     {
         InitializeComponent();
-        DataContext = new PlayersViewModel();
     }
 }

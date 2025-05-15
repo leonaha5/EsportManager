@@ -10,7 +10,7 @@
         <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Players}" SelectedItem="{Binding SelectedPlayer, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="models:Player">
-                    <TextBlock Text="{Binding Nickame}"/>
+                    <TextBlock Text="{Binding Nickname}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
