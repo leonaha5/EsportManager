@@ -1,0 +1,48 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:EsportManager.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="680" d:DesignHeight="550"
+        Width="680" Height="550"
+        x:Class="EsportManager.Views.MainWindow"
+        x:DataType="viewModels:MainWindowViewModel"
+        Title="EsportManager">
+
+    <Grid
+        RowDefinitions="Auto, *"
+        ColumnDefinitions="*">
+        <Grid Grid.Row="0" Margin="10" ColumnDefinitions="*,*,*">
+            <Button Grid.Column="0"
+                    Content="Players"
+                    Height="40"
+                    FontSize="18"
+                    CornerRadius="6"
+                    Width="220"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Command="{Binding ShowPlayersViewCommand}" />
+            <Button Grid.Column="1"
+                    Content="Tournaments"
+                    Height="40"
+                    FontSize="18"
+                    CornerRadius="6"
+                    Width="220"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Command="{Binding ShowTournamentsViewCommand}" />
+            <Button Grid.Column="2"
+                    Content="Trainings"
+                    Height="40"
+                    Width="220"
+                    FontSize="18"
+                    CornerRadius="6"
+                    Command="{Binding ShowTrainingsViewCommand}"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center" />
+        </Grid>
+
+        <ContentControl
+            Grid.Row="1" Content="{Binding CurrentView}" />
+    </Grid>
+</Window>
