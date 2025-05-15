@@ -1,0 +1,16 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:EsportManager.ViewModels"
+        x:Class="EsportManager.Windows.AddPlayerWindow"
+        Title="AddPlayerWindow"
+        x:DataType="vm:AddPlayerWindowModel">
+    <StackPanel Orientation="Vertical">
+        <TextBlock>Name</TextBlock>
+        <TextBox Text="{Binding Nickname}" Watermark="Your (nick)name" />
+        <TextBlock>Game</TextBlock>
+        <TextBox Text="{Binding Game}" Watermark="Your (nick)name" />
+        <Button FontSize="20" Width="200" Margin="10" CornerRadius="10" HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center" Content="Add to database!" Command="{Binding AddPlayerToDatabaseCommand}" />
+
+    </StackPanel>
+</Window>

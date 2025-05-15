@@ -21,39 +21,62 @@ public class PlayerCommands(string connectionString) : IPlayerCommands
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
-        return await connection.QueryAsync<Player>("SELECT * FROM Players");
+
+        return await connection.QueryAsync<Player>("SELECT * FROM players");
     }
 
     public async Task<Player?> GetByIdAsync(int playerId)
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
-        return await connection.QueryFirstOrDefaultAsync<Player>("SELECT * FROM Players WHERE Id = @Id",
-            new { Id = playerId });
+
+        return await connection.QueryFirstOrDefaultAsync<Player>(
+            "SELECT * FROM players WHERE Id = @Id",
+            new { Id = playerId }
+        );
     }
 
     public async Task AddAsync(Player player)
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
+
         await connection.ExecuteAsync(
-            "INSERT INTO Players (Name, Skill, Stress, Fatigue, Points, Game, Money) VALUES (@Name, @Skill, @Stress, @Fatigue, @Points, @Game, @Money)",
-            player);
+            @"INSERT INTO players 
+              (nickname, skilllevel, stresslevel, fatiguelevel, points, game, money)
+              VALUES
+              (@Nickname, @SkillLevel, @StressLevel, @FatigueLevel, @Points, @Game, @Money)",
+            player
+        );
     }
 
     public async Task UpdateAsync(Player player)
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
+
         await connection.ExecuteAsync(
-            "UPDATE Players SET Name = @Name, Skill = @Skill, Stress = @Stress, Fatigue = @Fatigue, Points = @Points, Game = @Game, Money = @Money WHERE Id = @Id",
-            player);
+            @"UPDATE players
+              SET nickname     = @Nickname,
+                  skilllevel   = @SkillLevel,
+                  stresslevel  = @StressLevel,
+                  fatiguelevel = @FatigueLevel,
+                  points       = @Points,
+                  game         = @Game,
+                  money        = @Money
+              WHERE id = @Id",
+            player
+        );
     }
 
     public async Task DeleteAsync(int playerId)
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
-        await connection.ExecuteAsync("DELETE FROM Players WHERE Id = @Id", new { Id = playerId });
+
+        await connection.ExecuteAsync(
+            "DELETE FROM Players WHERE Id = @Id",
+            new { Id = playerId }
+        );
     }
 }

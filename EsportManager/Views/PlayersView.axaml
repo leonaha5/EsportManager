@@ -1,8 +1,19 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:models1="clr-namespace:EsportManager.Models"
+             xmlns:models="clr-namespace:EsportManager.Models"
              xmlns:viewModels="clr-namespace:EsportManager.ViewModels"
              x:Class="EsportManager.Views.PlayersView"
-             x:Name="PlayersViewModel">
-Players virw
+             x:Name="PlayersViewModel"
+             x:DataType="viewModels:PlayersViewModel">
+    <StackPanel>
+        <TextBlock FontSize="30" Margin="10" Text="{Binding Title}"/>
+        <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Players}" SelectedItem="{Binding SelectedPlayer, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="models:Player">
+                    <TextBlock Text="{Binding Nickame}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button x:Name="PlayerSigningButton" FontSize="20" Width="200" Margin="10" CornerRadius="10" HorizontalContentAlignment="Center" Content="Add new player" Command="{Binding AddPlayerWindow}"/>
+    </StackPanel>
 </UserControl>

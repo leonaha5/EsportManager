@@ -3,50 +3,43 @@ using Npgsql;
 
 namespace EsportManager.Commands;
 
-public class DatabaseCommands
+public class DatabaseCommands(string connectionString)
 {
-    private readonly string _connectionString;
-
-    public DatabaseCommands(string connectionString)
-    {
-        _connectionString = connectionString;
-    }
-
     public void InitializeDatabase()
     {
-        using var connection = new NpgsqlConnection(_connectionString);
+        using var connection = new NpgsqlConnection(connectionString);
         connection.Open();
 
         connection.Execute("""
-                                       CREATE TABLE IF NOT EXISTS Players (
-                                           Id SERIAL PRIMARY KEY,
-                                           Name TEXT,
-                                           Skill INTEGER,
-                                           Stress INTEGER,
-                                           Fatigue INTEGER,
-                                           Points INTEGER,
-                                           Game TEXT,
-                                           Money DECIMAL
+                                       CREATE TABLE IF NOT EXISTS players (
+                                           id SERIAL PRIMARY KEY,
+                                           nickname TEXT,
+                                           skilllevel INTEGER,
+                                           stresslevel INTEGER,
+                                           fatiguelevel INTEGER,
+                                           points INTEGER,
+                                           game TEXT,
+                                           money DECIMAL
                                        );
                            """);
 
         connection.Execute("""
-                                       CREATE TABLE IF NOT EXISTS Tournaments (
-                                           Id SERIAL PRIMARY KEY,
-                                           Name TEXT,
-                                           Entry DATE,
-                                           Prize DECIMAL,
-                                           MinSkillRequired INTEGER
+                                       CREATE TABLE IF NOT EXISTS tournaments (
+                                           id SERIAL PRIMARY KEY,
+                                           name TEXT,
+                                           entry DATE,
+                                           prize DECIMAL,
+                                           minskillrequired INTEGER
                                        );
                            """);
 
         connection.Execute(@"
-            CREATE TABLE IF NOT EXISTS Trainings (
-                Id SERIAL PRIMARY KEY,
-                Type TEXT,
-                SkillIncrease INTEGER,
-                FatigueIncrease INTEGER,
-                StressIncrease INTEGER
+            CREATE TABLE IF NOT EXISTS trainings (
+                id SERIAL PRIMARY KEY,
+                type TEXT,
+                skillincrease INTEGER,
+                fatigueincrease INTEGER,
+                stressincrease INTEGER
             );
         ");
     }

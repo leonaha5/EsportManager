@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EsportManager.Models;
+using EsportManager.Windows;
+
 // using EsportManager.Windows;
 
 namespace EsportManager.ViewModels;
@@ -13,10 +15,10 @@ public partial class PlayersViewModel : ViewModelBase
     [ObservableProperty] private string _title = "Players";
 
 
-    // [RelayCommand]
-    // public void AddPlayerWindow()
-    // {
-    //     var addPlayerWindow = new AddPlayerWindow();
-    //     addPlayerWindow.Show();
-    // }
+    [RelayCommand]
+    public void AddPlayerWindow()
+    {
+        var addPlayerWindow = new AddPlayerWindow();
+        addPlayerWindow.Show();
+    }
 }

@@ -18,7 +18,7 @@ public interface IPlayerService
     // Task JoinTournamentAsync(Player player, Tournament tournament);
 }
 
-public class PlayerService(IPlayerService playerService, IPlayerCommands playerCommands) : IPlayerService
+public class PlayerService(IPlayerCommands playerCommands) : IPlayerService
 {
     private readonly Random _random = new();
 

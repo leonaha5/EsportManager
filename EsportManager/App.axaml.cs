@@ -1,21 +1,32 @@
 using System;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using Avalonia.Data.Core;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using EsportManager.Commands;
 using EsportManager.Services;
 using EsportManager.ViewModels;
 using EsportManager.Views;
+using EsportManager.Windows;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EsportManager;
 
-public partial class App : Application
+public class App : Application
 {
-    private IServiceProvider _serviceProvider;
+    private readonly IServiceProvider _serviceProvider;
+
+    public App()
+    {
+        Services = new ServiceCollection();
+        ConfigureServices(Services);
+        _serviceProvider = Services.BuildServiceProvider();
+    }
+
     public static IServiceCollection Services { get; private set; }
+
+    public new static App? Current => (App)Application.Current!;
+
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
@@ -28,7 +39,7 @@ public partial class App : Application
             BindingPlugins.DataValidators.RemoveAt(0);
             desktop.MainWindow = new MainWindow
             {
-                DataContext = _serviceProvider.GetRequiredService<MainWindowViewModel>(),
+                DataContext = _serviceProvider.GetRequiredService<MainWindowViewModel>()
             };
 
             var databaseRepository = _serviceProvider.GetRequiredService<DatabaseCommands>();
@@ -48,28 +59,25 @@ public partial class App : Application
                                         Database="esport_manager_db";
                                         """;
         services.AddSingleton<IPlayerCommands, PlayerCommands>(provider => new PlayerCommands(connectionString));
- 
+
         services.AddSingleton<IPlayerService, PlayerService>();
-        
+
         services.AddTransient<PlayersViewModel>();
 
         services.AddTransient<TrainingsView>();
         services.AddTransient<TournamentsView>();
         services.AddTransient<PlayersView>();
-        
-        services.AddSingleton<MainWindowViewModel>();
-        
-        services.AddSingleton<DatabaseCommands>(provider => new DatabaseCommands(connectionString));
-        
-    }
-    
-    public new static App? Current => (App)Application.Current!;
-    public T GetService<T>() => _serviceProvider.GetRequiredService<T>();
 
-    public App()
+        services.AddSingleton<MainWindowViewModel>();
+
+        services.AddSingleton<DatabaseCommands>(provider => new DatabaseCommands(connectionString));
+
+        services.AddTransient<AddPlayerWindowModel>();
+        services.AddTransient<AddPlayerWindow>();
+    }
+
+    public T GetService<T>()
     {
-        Services = new ServiceCollection();
-        ConfigureServices(Services);
-        _serviceProvider = Services.BuildServiceProvider();
+        return _serviceProvider.GetRequiredService<T>();
     }
 }
