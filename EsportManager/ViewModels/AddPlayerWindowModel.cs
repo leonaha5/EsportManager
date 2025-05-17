@@ -2,9 +2,10 @@ using System.Threading.Tasks;
 using Avalonia.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
 using EsportManager.Models;
 using EsportManager.Services;
+using IMessengerExtensions = CommunityToolkit.Mvvm.Messaging.IMessengerExtensions;
+using WeakReferenceMessenger = CommunityToolkit.Mvvm.Messaging.WeakReferenceMessenger;
 
 namespace EsportManager.ViewModels;
 
@@ -12,7 +13,6 @@ public partial class AddPlayerWindowModel : ObservableObject
 {
     private readonly IPlayerService _playerService;
     private Window _addPlayerWindow;
-
     [ObservableProperty] private string _game;
     [ObservableProperty] private string _nickname;
 
@@ -25,6 +25,7 @@ public partial class AddPlayerWindowModel : ObservableObject
     {
         _addPlayerWindow = window;
     }
+
 
     [RelayCommand]
     private async Task AddPlayerToDatabase()
@@ -46,7 +47,7 @@ public partial class AddPlayerWindowModel : ObservableObject
 
         await _playerService.AddPlayerAsync(newPlayer);
 
-        WeakReferenceMessenger.Default.Send(new PlayerAddedMessage());
+        IMessengerExtensions.Send(WeakReferenceMessenger.Default, new PlayerAddedMessage());
 
         _addPlayerWindow.Close();
     }

@@ -3,9 +3,9 @@ using EsportManager.ViewModels;
 
 namespace EsportManager.Windows;
 
-public partial class AddPlayerWindow : Window
+public partial class AddPlayer : Window
 {
-    public AddPlayerWindow()
+    public AddPlayer()
     {
         InitializeComponent();
         DataContext = App.Current.GetService<AddPlayerWindowModel>();

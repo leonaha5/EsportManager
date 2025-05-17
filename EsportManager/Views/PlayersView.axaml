@@ -1,19 +1,51 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:models="clr-namespace:EsportManager.Models"
              xmlns:viewModels="clr-namespace:EsportManager.ViewModels"
              x:Class="EsportManager.Views.PlayersView"
-             x:Name="PlayersViewModel"
-             x:DataType="viewModels:PlayersViewModel">
+             x:Name="playersView"
+             x:DataType="viewModels:PlayersViewModel"
+             d:DataContext="{d:DesignInstance viewModels:PlayersViewModel}">
     <StackPanel>
-        <TextBlock FontSize="30" Margin="10" Text="{Binding Title}"/>
-        <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Players}" SelectedItem="{Binding SelectedPlayer, Mode=TwoWay}">
+        <TextBlock FontSize="30" Margin="10" Text="{Binding Title}" />
+        <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Players}"
+                 SelectedItem="{Binding SelectedPlayer, Mode=TwoWay}">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="models:Player">
-                    <TextBlock Text="{Binding Nickname}"/>
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Nickname:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Nickname}" Margin="5,0,0,0" />
+                            <TextBlock Text="Game:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Game}" Margin="5,0,0,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Skill level:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding SkillLevel}" Margin="5,0,0,0" />
+                            <TextBlock Text="Stress level:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding StressLevel}" Margin="5,0,0,0" />
+                            <TextBlock Text="Fatigue level:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding FatigueLevel}" Margin="5,0,0,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Money:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Money}" Margin="5,0,0,0" />
+                            <TextBlock Text="Points:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Points}" Margin="5,0,0,0" />
+                        </StackPanel>
+                    </StackPanel>
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Button x:Name="PlayerSigningButton" FontSize="20" Width="200" Margin="10" CornerRadius="10" HorizontalContentAlignment="Center" Content="Add new player" Command="{Binding AddPlayerWindow}"/>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="AddPlayerButton" FontSize="20" Width="250" Margin="10" CornerRadius="10"
+                    HorizontalContentAlignment="Center" Content="Add new player"
+                    Command="{Binding AddPlayerWindowCommand}" />
+            <Button x:Name="DeletePlayerButton" FontSize="20" Width="250" Margin="10" CornerRadius="10"
+                    HorizontalContentAlignment="Center" Content="Delete selected player"
+                    Command="{Binding DeletePlayerFromDatabaseCommand}" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

@@ -1,23 +1,19 @@
-﻿namespace EsportManager.ViewModels;
-
-using System;
-using System.Diagnostics;
+﻿using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EsportManager.Views;
 using Microsoft.Extensions.DependencyInjection;
 
+namespace EsportManager.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    private readonly PlayersView _playersView;
-    [ObservableProperty] private object? _currentView;
     private readonly IServiceProvider _serviceProvider;
+    [ObservableProperty] private object? _currentView;
 
-    public MainWindowViewModel(IServiceProvider serviceProvider, PlayersView playersView)
+    public MainWindowViewModel(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
-        _playersView = playersView;
         CurrentView = _serviceProvider.GetRequiredService<PlayersView>();
     }
 
@@ -26,12 +22,13 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         CurrentView = _serviceProvider.GetRequiredService<PlayersView>();
     }
+
     [RelayCommand]
     private void ShowTournamentsView()
     {
         CurrentView = _serviceProvider.GetRequiredService<TournamentsView>();
     }
-    
+
     [RelayCommand]
     private void ShowTrainingsView()
     {

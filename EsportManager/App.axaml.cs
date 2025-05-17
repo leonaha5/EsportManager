@@ -63,18 +63,25 @@ public class App : Application
 
         services.AddSingleton<IPlayerService, PlayerService>();
 
+        services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<PlayersViewModel>();
+        services.AddTransient<AddPlayerWindowModel>();
 
         services.AddTransient<TrainingsView>();
         services.AddTransient<TournamentsView>();
         services.AddTransient<PlayersView>();
 
-        services.AddSingleton<MainWindowViewModel>();
+        services.AddTransient<PlayersView>(provider =>
+        {
+            var view = new PlayersView();
+            view.DataContext = provider.GetRequiredService<PlayersViewModel>();
+            return view;
+        });
+
 
         services.AddSingleton<DatabaseCommands>(provider => new DatabaseCommands(connectionString));
 
-        services.AddTransient<AddPlayerWindowModel>();
-        services.AddTransient<AddPlayerWindow>();
+        services.AddTransient<AddPlayer>();
     }
 
     public T GetService<T>()

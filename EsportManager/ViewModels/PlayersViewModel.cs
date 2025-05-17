@@ -23,13 +23,22 @@ public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindo
     public PlayersViewModel(IPlayerService playerService)
     {
         _playerService = playerService;
-        LoadPlayersAsync();
+        _ = LoadPlayersAsync();
 
         WeakReferenceMessenger.Default.Register(this);
     }
 
     public async void Receive(AddPlayerWindowModel.PlayerAddedMessage message)
     {
+        await LoadPlayersAsync();
+    }
+
+    [RelayCommand]
+    private async Task DeletePlayerFromDatabase()
+    {
+        if (SelectedPlayer is null) return;
+        await _playerService.DeletePlayerAsync(SelectedPlayer.Id);
+        Players.Clear();
         await LoadPlayersAsync();
     }
 
@@ -48,9 +57,9 @@ public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindo
     }
 
     [RelayCommand]
-    public void AddPlayerWindow()
+    private void AddPlayerWindow()
     {
-        var addPlayerWindow = new AddPlayerWindow();
+        var addPlayerWindow = new AddPlayer();
         addPlayerWindow.Show();
     }
 }
