@@ -1,0 +1,24 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:EsportManager.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        Width="680" Height="550"
+        x:Class="EsportManager.Windows.SelectPlayer"
+        Title="Select Player"
+        x:DataType="vm:SelectPlayerWindowModel">
+    <StackPanel Margin="10">
+        <TextBlock FontSize="30" Margin="10" Text="Select the player to train" />
+        <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Players}"
+                 SelectedItem="{Binding SelectedPlayer}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Nickname}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button FontSize="20" Width="200" Margin="10" CornerRadius="10" HorizontalContentAlignment="Center"
+                Command="{Binding SelectPlayerCommand}" Content="Select player" />
+    </StackPanel>
+</Window>

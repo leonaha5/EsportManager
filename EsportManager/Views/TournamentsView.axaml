@@ -1,6 +1,46 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewModels="clr-namespace:EsportManager.ViewModels"
+             xmlns:models="clr-namespace:EsportManager.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EsportManager.Views.TournamentsView"
+             x:DataType="viewModels:TournamentsViewModel">
 
-             x:Class="EsportManager.Views.TournamentsView">
-    Welcome to Tournaments!
+    <StackPanel>
+        <TextBlock FontSize="30" Margin="10" Text="{Binding Title}" />
+        <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Tournaments}"
+                 SelectedItem="{Binding SelectedTournament, Mode=TwoWay}">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="models:Tournament">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Name:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Name}" Margin="5,0,0,0" />
+                            <TextBlock Text="MinSkillRequired:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding MinSkillRequired}" Margin="5,0,0,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="PrizePool:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding PrizePool}" Margin="5,0,0,0" />
+                            <TextBlock Text="EntryFee:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding EntryFee}" Margin="5,0,0,0" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="JoinTournamentButton" FontSize="20" Width="200" Margin="10" CornerRadius="10"
+                    HorizontalContentAlignment="Center" Content="Participate"
+                    Command="{Binding ParticipateInTournamentCommand}" CommandParameter="{Binding SelectedTournament}" />
+            <Button x:Name="AddTournamentButton" FontSize="20" Width="200" Margin="10" CornerRadius="10"
+                    HorizontalContentAlignment="Center" Content="Add Tournament"
+                    Command="{Binding AddTournamentWindowCommand}" />
+            <Button x:Name="DeleteTournamentButton" FontSize="20" Width="200" Margin="10" CornerRadius="10"
+                    HorizontalContentAlignment="Center" Content="Delete"
+                    Command="{Binding DeleteTournamentFromDatabaseCommand}" />
+        </StackPanel>
+    </StackPanel>
 </UserControl>

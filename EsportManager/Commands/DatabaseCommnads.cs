@@ -27,8 +27,8 @@ public class DatabaseCommands(string connectionString)
                            CREATE TABLE IF NOT EXISTS tournaments (
                                id SERIAL PRIMARY KEY,
                                name TEXT,
-                               entry DATE,
-                               prize DECIMAL,
+                               entryfee INTEGER,
+                               prizepool INTEGER,
                                minskillrequired INTEGER
                            );
                            """);

@@ -13,9 +13,9 @@ public interface IPlayerService
     Task AddPlayerAsync(Player player);
     Task UpdatePlayerAsync(Player player);
     Task DeletePlayerAsync(int id);
+    Task JoinTournamentAsync(Player player, Tournament tournament);
 
     // Task TrainPlayerAsync(Player player, Training training);
-    // Task JoinTournamentAsync(Player player, Tournament tournament);
 }
 
 public class PlayerService(IPlayerCommands playerCommands) : IPlayerService
@@ -47,38 +47,30 @@ public class PlayerService(IPlayerCommands playerCommands) : IPlayerService
         await playerCommands.DeleteAsync(id);
     }
 
-    // public async Task TrainPlayerAsync(Player player, Training training)
-    // {
-    //     player.SkillLevel += training.SkillIncrease;
-    //     player.FatigueLevel = Math.Min(100, player.FatigueLevel + training.FatigueIncrease);
-    //     player.StressLevel = Math.Min(100, player.StressLevel + training.StressIncrease);
-    //     await playerCommands.UpdateAsync(player);
-    // }
-    //
-    // public async Task JoinTournamentAsync(Player player, Tournament tournament)
-    // {
-    //     if (player.SkillLevel >= tournament.MinSkillRequired)
-    //     {
-    //         var randomNumber = _random.Next(1, 201);
-    //
-    //         if (randomNumber <= player.SkillLevel)
-    //         {
-    //             player.Points += 100;
-    //             player.Money += tournament.PrizePool;
-    //         }
-    //         else
-    //         {
-    //             player.Points -= 10;
-    //         }
-    //
-    //         player.FatigueLevel += 10;
-    //         player.StressLevel += 10;
-    //
-    //         await playerCommands.UpdateAsync(player);
-    //     }
-    //     else
-    //     {
-    //         throw new Exception($"Player {player.SkillLevel} is out of range");
-    //     }
-    // }
+    public async Task JoinTournamentAsync(Player player, Tournament tournament)
+    {
+        if (player.SkillLevel >= tournament.MinSkillRequired)
+        {
+            var randomNumber = _random.Next(1, 201);
+
+            if (randomNumber <= player.SkillLevel)
+            {
+                player.Points += 100;
+                player.Money += tournament.PrizePool;
+            }
+            else
+            {
+                player.Points -= 10;
+            }
+
+            player.FatigueLevel += 10;
+            player.StressLevel += 10;
+
+            await playerCommands.UpdateAsync(player);
+        }
+        else
+        {
+            throw new Exception($"Player {player.SkillLevel} is out of range");
+        }
+    }
 }

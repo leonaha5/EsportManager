@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:EsportManager.ViewModels"
+        x:Class="EsportManager.Windows.AddTournament"
+        Title="Add Tournament Window"
+        x:DataType="vm:AddTournamentWindowModel">
+    <StackPanel Orientation="Vertical">
+        <TextBlock>Name</TextBlock>
+        <TextBox Text="{Binding Name}" Watermark="Tournament Name" />
+        <TextBlock>Entry Fee</TextBlock>
+        <TextBox Text="{Binding EntryFee}" Watermark="Tournament Entry Fee" />
+        <TextBlock>Prize Pool Fee</TextBlock>
+        <TextBox Text="{Binding PrizePool}" Watermark="Tournament Entry Fee" />
+        <TextBlock>Minimal Skill Required To Join</TextBlock>
+        <TextBox Text="{Binding MinSkillRequired}" Watermark="Min Skill Required" />
+        <Button FontSize="20" Width="200" Margin="10" CornerRadius="10" HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center" Content="Add to database!"
+                Command="{Binding AddTournamentToDatabaseCommand}" />
+
+    </StackPanel>
+</Window>

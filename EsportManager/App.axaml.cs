@@ -59,17 +59,40 @@ public class App : Application
                                         Database="esport_manager_db";
                                         Include Error Detail=true;
                                         """;
+
+        // commands
         services.AddSingleton<IPlayerCommands, PlayerCommands>(provider => new PlayerCommands(connectionString));
+        services.AddSingleton<ITournamentCommands, TournamentCommands>(provider =>
+            new TournamentCommands(connectionString));
 
+
+        // services
         services.AddSingleton<IPlayerService, PlayerService>();
+        services.AddSingleton<ITournamentService, TournamentService>();
 
+
+        // view or window models
         services.AddSingleton<MainWindowViewModel>();
         services.AddTransient<PlayersViewModel>();
         services.AddTransient<AddPlayerWindowModel>();
+        services.AddTransient<TournamentsViewModel>();
+        services.AddTransient<SelectPlayerWindowModel>();
+        services.AddTransient<AddTournamentWindowModel>();
 
+
+        // views
         services.AddTransient<TrainingsView>();
         services.AddTransient<TournamentsView>();
         services.AddTransient<PlayersView>();
+
+
+        // views datacontexts
+        services.AddTransient<TournamentsView>(provider =>
+        {
+            var view = new TournamentsView();
+            view.DataContext = provider.GetRequiredService<TournamentsViewModel>();
+            return view;
+        });
 
         services.AddTransient<PlayersView>(provider =>
         {
@@ -78,10 +101,14 @@ public class App : Application
             return view;
         });
 
-
+        // database
         services.AddSingleton<DatabaseCommands>(provider => new DatabaseCommands(connectionString));
 
+
+        // windows
         services.AddTransient<AddPlayer>();
+        services.AddTransient<SelectPlayer>();
+        services.AddTransient<AddTournament>();
     }
 
     public T GetService<T>()

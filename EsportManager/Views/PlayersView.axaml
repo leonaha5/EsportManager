@@ -35,7 +35,6 @@
                             <TextBlock Text="{Binding Points}" Margin="5,0,0,0" />
                         </StackPanel>
                     </StackPanel>
-
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
