@@ -11,6 +11,5 @@
         <TextBox Text="{Binding Game}" Watermark="Your (nick)name" />
         <Button FontSize="20" Width="200" Margin="10" CornerRadius="10" HorizontalContentAlignment="Center"
                 HorizontalAlignment="Center" Content="Add to database!" Command="{Binding AddPlayerToDatabaseCommand}" />
-
     </StackPanel>
 </Window>

@@ -46,9 +46,7 @@ public partial class AddPlayerWindowModel : ObservableObject
         };
 
         await _playerService.AddPlayerAsync(newPlayer);
-
         IMessengerExtensions.Send(WeakReferenceMessenger.Default, new PlayerAddedMessage());
-
         _addPlayerWindow.Close();
     }
 

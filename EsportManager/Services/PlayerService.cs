@@ -14,8 +14,7 @@ public interface IPlayerService
     Task UpdatePlayerAsync(Player player);
     Task DeletePlayerAsync(int id);
     Task JoinTournamentAsync(Player player, Tournament tournament);
-
-    // Task TrainPlayerAsync(Player player, Training training);
+    Task TrainPlayerAsync(Player player, Training training);
 }
 
 public class PlayerService(IPlayerCommands playerCommands) : IPlayerService
@@ -49,18 +48,25 @@ public class PlayerService(IPlayerCommands playerCommands) : IPlayerService
 
     public async Task JoinTournamentAsync(Player player, Tournament tournament)
     {
-        if (player.SkillLevel >= tournament.MinSkillRequired)
+        if (player.SkillLevel >= tournament.MinSkillRequired && player.Money >= tournament.EntryFee)
         {
-            var randomNumber = _random.Next(1, 201);
+            player.Money -= tournament.EntryFee;
 
-            if (randomNumber <= player.SkillLevel)
+            var skillDifference = player.SkillLevel - tournament.MinSkillRequired;
+
+            const double scalingFactor = 50.0;
+            var winProbability = 0.2 + 0.6 * skillDifference / (skillDifference + scalingFactor);
+
+            var randomValue = _random.NextDouble();
+
+            if (randomValue < winProbability)
             {
-                player.Points += 100;
+                player.Points += _random.Next(10, 101);
                 player.Money += tournament.PrizePool;
             }
             else
             {
-                player.Points -= 10;
+                player.Points = Math.Max(0, player.Points - _random.Next(10, 26));
             }
 
             player.FatigueLevel += 10;
@@ -68,9 +74,13 @@ public class PlayerService(IPlayerCommands playerCommands) : IPlayerService
 
             await playerCommands.UpdateAsync(player);
         }
-        else
-        {
-            throw new Exception($"Player {player.SkillLevel} is out of range");
-        }
+    }
+
+    public async Task TrainPlayerAsync(Player player, Training training)
+    {
+        player.SkillLevel += training.SkillIncrease;
+        player.FatigueLevel = Math.Min(100, player.FatigueLevel + training.FatigueIncrease);
+        player.StressLevel = Math.Min(100, player.StressLevel + training.StressIncrease);
+        await playerCommands.UpdateAsync(player);
     }
 }

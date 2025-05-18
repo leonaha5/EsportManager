@@ -61,14 +61,18 @@ public class App : Application
                                         """;
 
         // commands
-        services.AddSingleton<IPlayerCommands, PlayerCommands>(provider => new PlayerCommands(connectionString));
+        services.AddSingleton<IPlayerCommands, PlayerCommands>(provider =>
+            new PlayerCommands(connectionString));
         services.AddSingleton<ITournamentCommands, TournamentCommands>(provider =>
             new TournamentCommands(connectionString));
+        services.AddSingleton<ITrainingCommands, TrainingCommands>(provider =>
+            new TrainingCommands(connectionString));
 
 
         // services
         services.AddSingleton<IPlayerService, PlayerService>();
         services.AddSingleton<ITournamentService, TournamentService>();
+        services.AddSingleton<ITrainingService, TrainingService>();
 
 
         // view or window models
@@ -78,6 +82,8 @@ public class App : Application
         services.AddTransient<TournamentsViewModel>();
         services.AddTransient<SelectPlayerWindowModel>();
         services.AddTransient<AddTournamentWindowModel>();
+        services.AddTransient<TrainingsViewModel>();
+        services.AddTransient<AddTrainingWindowModel>();
 
 
         // views
@@ -101,6 +107,13 @@ public class App : Application
             return view;
         });
 
+        services.AddTransient<TrainingsView>(provider =>
+        {
+            var view = new TrainingsView();
+            view.DataContext = provider.GetRequiredService<TrainingsViewModel>();
+            return view;
+        });
+
         // database
         services.AddSingleton<DatabaseCommands>(provider => new DatabaseCommands(connectionString));
 
@@ -109,6 +122,7 @@ public class App : Application
         services.AddTransient<AddPlayer>();
         services.AddTransient<SelectPlayer>();
         services.AddTransient<AddTournament>();
+        services.AddTransient<AddTraining>();
     }
 
     public T GetService<T>()

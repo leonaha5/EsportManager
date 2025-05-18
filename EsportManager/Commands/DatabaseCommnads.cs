@@ -19,7 +19,7 @@ public class DatabaseCommands(string connectionString)
                                fatiguelevel INTEGER,
                                points INTEGER,
                                game TEXT,
-                               money DECIMAL
+                               money INTEGER
                            );
                            """);
 
@@ -36,7 +36,7 @@ public class DatabaseCommands(string connectionString)
         connection.Execute(@"
                            CREATE TABLE IF NOT EXISTS trainings (
                                id SERIAL PRIMARY KEY,
-                               type TEXT,
+                               name TEXT,
                                skillincrease INTEGER,
                                fatigueincrease INTEGER,
                                stressincrease INTEGER

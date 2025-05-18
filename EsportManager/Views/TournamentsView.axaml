@@ -11,7 +11,7 @@
     <StackPanel>
         <TextBlock FontSize="30" Margin="10" Text="{Binding Title}" />
         <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Tournaments}"
-                 SelectedItem="{Binding SelectedTournament, Mode=TwoWay}">
+                 SelectedItem="{Binding SelectedTournament, Mode=TwoWay}" MaxHeight="350">
             <ListBox.ItemTemplate>
                 <DataTemplate x:DataType="models:Tournament">
                     <StackPanel Orientation="Vertical">

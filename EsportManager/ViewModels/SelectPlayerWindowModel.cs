@@ -15,6 +15,7 @@ public partial class SelectPlayerWindowModel : ViewModelBase
     private IPlayerService _playerService;
     [ObservableProperty] private Player? _selectedPlayer;
     private Tournament? _selectedTournament;
+    private Training? _selectedTraining;
     private ITournamentService _tournamentService;
 
     public SelectPlayerWindowModel(IPlayerService playerService, ITournamentService tournamentService)
@@ -28,10 +29,23 @@ public partial class SelectPlayerWindowModel : ViewModelBase
         set => SetProperty(ref _selectedTournament, value);
     }
 
+    public Training? SelectedTraining
+    {
+        set => SetProperty(ref _selectedTraining, value);
+    }
+
     public void InitializeTournament(IPlayerService playerService, Tournament selectedTournament)
     {
         _playerService = playerService;
         SelectedTournament = selectedTournament;
+        LoadPlayersAsync();
+    }
+
+    public void InitializeTraining(IPlayerService playerService, Training selectedTraining)
+    {
+        _playerService = playerService;
+        SelectedTraining = selectedTraining;
+        SelectedTournament = null;
         LoadPlayersAsync();
     }
 
@@ -50,20 +64,27 @@ public partial class SelectPlayerWindowModel : ViewModelBase
     private void SelectPlayer()
     {
         if (SelectedPlayer == null || _playerSelectionWindow == null) return;
-        if (_selectedTournament == null) return;
-        WeakReferenceMessenger.Default.Send(new PlayerTournamentMessage(SelectedPlayer, _selectedTournament));
-        _playerSelectionWindow.Close();
+        if (_selectedTraining != null)
+        {
+            WeakReferenceMessenger.Default.Send(new PlayerTrainedMessage(SelectedPlayer, _selectedTraining));
+            _playerSelectionWindow.Close();
+        }
+        else if (_selectedTournament != null)
+        {
+            WeakReferenceMessenger.Default.Send(new PlayerTournamentMessage(SelectedPlayer, _selectedTournament));
+            _playerSelectionWindow.Close();
+        }
     }
 
-    public class PlayerTournamentMessage
+    public class PlayerTrainedMessage(Player trainedPlayer, Training chosenTraining)
     {
-        public PlayerTournamentMessage(Player tournamentPlayer, Tournament chosenTournament)
-        {
-            TournamentPlayer = tournamentPlayer;
-            ChosenTournament = chosenTournament;
-        }
+        public Player TrainedPlayer { get; set; } = trainedPlayer;
+        public Training ChosenTraining { get; set; } = chosenTraining;
+    }
 
-        public Player TournamentPlayer { get; set; }
-        public Tournament ChosenTournament { get; set; }
+    public class PlayerTournamentMessage(Player tournamentPlayer, Tournament chosenTournament)
+    {
+        public Player TournamentPlayer { get; set; } = tournamentPlayer;
+        public Tournament ChosenTournament { get; set; } = chosenTournament;
     }
 }

@@ -13,7 +13,8 @@ using EsportManager.Windows;
 
 namespace EsportManager.ViewModels;
 
-public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindowModel.PlayerAddedMessage>
+public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindowModel.PlayerAddedMessage>,
+    IRecipient<TournamentsViewModel.PlayerJoinedTournamentMessage>
 {
     private readonly IPlayerService _playerService;
     [ObservableProperty] private ObservableCollection<Player> _players = [];
@@ -25,10 +26,16 @@ public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindo
         _playerService = playerService;
         _ = LoadPlayersAsync();
 
-        WeakReferenceMessenger.Default.Register(this);
+        WeakReferenceMessenger.Default.Register<AddPlayerWindowModel.PlayerAddedMessage>(this);
+        WeakReferenceMessenger.Default.Register<TournamentsViewModel.PlayerJoinedTournamentMessage>(this);
     }
 
     public async void Receive(AddPlayerWindowModel.PlayerAddedMessage message)
+    {
+        await LoadPlayersAsync();
+    }
+
+    public async void Receive(TournamentsViewModel.PlayerJoinedTournamentMessage message)
     {
         await LoadPlayersAsync();
     }

@@ -1,0 +1,21 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:EsportManager.ViewModels"
+        x:Class="EsportManager.Windows.AddTraining"
+        Title="Add Training Window"
+        x:DataType="vm:AddTrainingWindowModel">
+    <StackPanel Orientation="Vertical">
+        <TextBlock>Name</TextBlock>
+        <TextBox Text="{Binding Name}" Watermark="Tournament Name" />
+        <TextBlock>Skill Increase</TextBlock>
+        <TextBox Text="{Binding SkillIncrease}" Watermark="Tournament Entry Fee" />
+        <TextBlock>Stress Increase</TextBlock>
+        <TextBox Text="{Binding StressIncrease}" Watermark="Tournament Entry Fee" />
+        <TextBlock>Fatigue Increase</TextBlock>
+        <TextBox Text="{Binding FatigueIncrease}" Watermark="Min Skill Required" />
+        <Button FontSize="20" Width="200" Margin="10" CornerRadius="10" HorizontalContentAlignment="Center"
+                HorizontalAlignment="Center" Content="Add to database!"
+                Command="{Binding AddTrainingToDatabaseCommand}" />
+
+    </StackPanel>
+</Window>

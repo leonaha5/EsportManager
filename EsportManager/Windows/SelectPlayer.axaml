@@ -9,7 +9,7 @@
         Title="Select Player"
         x:DataType="vm:SelectPlayerWindowModel">
     <StackPanel Margin="10">
-        <TextBlock FontSize="30" Margin="10" Text="Select the player to train" />
+        <TextBlock FontSize="30" Margin="10" Text="Select the player" />
         <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Players}"
                  SelectedItem="{Binding SelectedPlayer}">
             <ListBox.ItemTemplate>

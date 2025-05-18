@@ -1,6 +1,5 @@
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -35,15 +34,9 @@ public partial class TournamentsViewModel : ViewModelBase, IRecipient<SelectPlay
 
     public async void Receive(SelectPlayerWindowModel.PlayerTournamentMessage message)
     {
-        try
-        {
-            await _playerService.JoinTournamentAsync(message.TournamentPlayer, message.ChosenTournament);
-            await LoadTournamentAsync();
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Error while joining tournament: {ex.Message}");
-        }
+        await _playerService.JoinTournamentAsync(message.TournamentPlayer, message.ChosenTournament);
+        await LoadTournamentAsync();
+        WeakReferenceMessenger.Default.Send(new PlayerJoinedTournamentMessage());
 
         SelectedTournament = null;
     }
@@ -90,4 +83,6 @@ public partial class TournamentsViewModel : ViewModelBase, IRecipient<SelectPlay
         var addTournamentWindow = new AddTournament();
         addTournamentWindow.Show();
     }
+
+    public class PlayerJoinedTournamentMessage;
 }

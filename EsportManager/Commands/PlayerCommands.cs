@@ -29,7 +29,6 @@ public class PlayerCommands(string connectionString) : IPlayerCommands
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
-
         return await connection.QueryFirstOrDefaultAsync<Player>(
             "SELECT * FROM players WHERE Id = @Id",
             new { Id = playerId }
@@ -40,7 +39,6 @@ public class PlayerCommands(string connectionString) : IPlayerCommands
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
-
         await connection.ExecuteAsync(
             @"INSERT INTO players 
               (nickname, skilllevel, stresslevel, fatiguelevel, points, game, money)
@@ -54,7 +52,6 @@ public class PlayerCommands(string connectionString) : IPlayerCommands
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
-
         await connection.ExecuteAsync(
             @"UPDATE players
               SET nickname     = @Nickname,
@@ -73,7 +70,6 @@ public class PlayerCommands(string connectionString) : IPlayerCommands
     {
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
-
         await connection.ExecuteAsync(
             "DELETE FROM Players WHERE Id = @Id",
             new { Id = playerId }
