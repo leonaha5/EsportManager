@@ -10,4 +10,7 @@ public class Player
     public int Points { get; set; }
     public string Game { get; set; }
     public decimal Money { get; set; }
+
+    public bool IsStressLevelHigh => StressLevel > 80;
+    public bool IsFatigueLevelHigh => FatigueLevel > 80;
 }

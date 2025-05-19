@@ -24,9 +24,23 @@
                             <TextBlock Text="Skill level:" Margin="5,0,0,0" />
                             <TextBlock Text="{Binding SkillLevel}" Margin="5,0,0,0" />
                             <TextBlock Text="Stress level:" Margin="5,0,0,0" />
-                            <TextBlock Text="{Binding StressLevel}" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding StressLevel}" Margin="5,0,0,0"
+                                       Classes.high-level="{Binding IsStressLevelHigh}">
+                                <TextBlock.Styles>
+                                    <Style Selector="TextBlock.high-level">
+                                        <Setter Property="Foreground" Value="Red" />
+                                    </Style>
+                                </TextBlock.Styles>
+                            </TextBlock>
                             <TextBlock Text="Fatigue level:" Margin="5,0,0,0" />
-                            <TextBlock Text="{Binding FatigueLevel}" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding FatigueLevel}" Margin="5,0,0,0"
+                                       Classes.high-level="{Binding IsFatigueLevelHigh}">
+                                <TextBlock.Styles>
+                                    <Style Selector="TextBlock.high-level">
+                                        <Setter Property="Foreground" Value="Red" />
+                                    </Style>
+                                </TextBlock.Styles>
+                            </TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="Money:" Margin="5,0,0,0" />
