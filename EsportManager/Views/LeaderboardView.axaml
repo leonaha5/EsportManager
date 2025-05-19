@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             x:Class="EsportManager.Views.LeaderboardView"
+             xmlns:viewModels="clr-namespace:EsportManager.ViewModels"
+             xmlns:models="clr-namespace:EsportManager.Models"
+             x:Name="Leaderboard"
+             x:DataType="viewModels:LeaderboardViewModel"
+             d:DataContext="{d:DesignInstance viewModels:LeaderboardViewModel}">
+    <StackPanel>
+        <TextBlock FontSize="30" Margin="10" Text="Leaderboard" />
+        <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Players}" MaxHeight="350">
+            <ListBox.ItemTemplate>
+                <DataTemplate x:DataType="models:Player">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Nickname:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Nickname}" Margin="5,0,0,0" />
+                            <TextBlock Text="Game:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Game}" Margin="5,0,0,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Money:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Money}" Margin="5,0,0,0" />
+                            <TextBlock Text="Points:" Margin="5,0,0,0" />
+                            <TextBlock Text="{Binding Points}" Margin="5,0,0,0" />
+                        </StackPanel>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </StackPanel>
+</UserControl>

@@ -9,7 +9,7 @@
              x:DataType="viewModels:TournamentsViewModel">
 
     <StackPanel>
-        <TextBlock FontSize="30" Margin="10" Text="{Binding Title}" />
+        <TextBlock FontSize="30" Margin="10" Text="Tournaments" />
         <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Tournaments}"
                  SelectedItem="{Binding SelectedTournament, Mode=TwoWay}" MaxHeight="350">
             <ListBox.ItemTemplate>

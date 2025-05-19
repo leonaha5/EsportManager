@@ -4,11 +4,11 @@
              xmlns:models="clr-namespace:EsportManager.Models"
              xmlns:viewModels="clr-namespace:EsportManager.ViewModels"
              x:Class="EsportManager.Views.PlayersView"
-             x:Name="playersView"
+             x:Name="Players"
              x:DataType="viewModels:PlayersViewModel"
              d:DataContext="{d:DesignInstance viewModels:PlayersViewModel}">
     <StackPanel>
-        <TextBlock FontSize="30" Margin="10" Text="{Binding Title}" />
+        <TextBlock FontSize="30" Margin="10" Text="Players" />
         <ListBox Margin="10" CornerRadius="10" FontSize="20" ItemsSource="{Binding Players}"
                  SelectedItem="{Binding SelectedPlayer, Mode=TwoWay}" MaxHeight="350">
             <ListBox.ItemTemplate>

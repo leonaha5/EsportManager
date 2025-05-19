@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -19,7 +20,6 @@ public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindo
     private readonly IPlayerService _playerService;
     [ObservableProperty] private ObservableCollection<Player> _players = [];
     [ObservableProperty] private Player? _selectedPlayer;
-    [ObservableProperty] private string _title = "Players";
 
     public PlayersViewModel(IPlayerService playerService)
     {
@@ -54,8 +54,12 @@ public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindo
         try
         {
             var players = await _playerService.GetAllPlayersAsync();
+
             Players.Clear();
-            foreach (var player in players) Players.Add(player);
+
+            var sortedPlayers = players.OrderBy(p => p.Points);
+
+            foreach (var player in sortedPlayers) Players.Add(player);
         }
         catch (Exception ex)
         {

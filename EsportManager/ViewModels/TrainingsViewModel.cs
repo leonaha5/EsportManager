@@ -17,7 +17,6 @@ public partial class TrainingsViewModel : ViewModelBase, IRecipient<SelectPlayer
     private readonly IServiceProvider _serviceProvider;
     private readonly ITrainingService _trainingService;
     [ObservableProperty] private Training _selectedTraining;
-    [ObservableProperty] private string _title = "Trainings";
     [ObservableProperty] private ObservableCollection<Training> _trainings = [];
 
     public TrainingsViewModel(ITrainingService trainingService, IPlayerService playerService,

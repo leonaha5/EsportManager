@@ -12,13 +12,13 @@
     <Grid
         RowDefinitions="Auto, *"
         ColumnDefinitions="*">
-        <Grid Grid.Row="0" Margin="10" ColumnDefinitions="*,*,*">
+        <Grid Grid.Row="0" Margin="10" ColumnDefinitions="*,*,*,*">
             <Button Grid.Column="0"
                     Content="Players"
                     Height="40"
                     FontSize="18"
                     CornerRadius="6"
-                    Width="220"
+                    Width="160"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     Command="{Binding ShowPlayersViewCommand}" />
@@ -27,17 +27,26 @@
                     Height="40"
                     FontSize="18"
                     CornerRadius="6"
-                    Width="220"
+                    Width="160"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     Command="{Binding ShowTournamentsViewCommand}" />
             <Button Grid.Column="2"
                     Content="Trainings"
                     Height="40"
-                    Width="220"
+                    Width="160"
                     FontSize="18"
                     CornerRadius="6"
                     Command="{Binding ShowTrainingsViewCommand}"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center" />
+            <Button Grid.Column="3"
+                    Content="Leaderboard"
+                    Height="40"
+                    Width="160"
+                    FontSize="18"
+                    CornerRadius="6"
+                    Command="{Binding ShowLeaderboardViewCommand}"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center" />
         </Grid>

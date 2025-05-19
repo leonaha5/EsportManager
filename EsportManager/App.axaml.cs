@@ -84,12 +84,14 @@ public class App : Application
         services.AddTransient<AddTournamentWindowModel>();
         services.AddTransient<TrainingsViewModel>();
         services.AddTransient<AddTrainingWindowModel>();
+        services.AddTransient<LeaderboardViewModel>();
 
 
         // views
         services.AddTransient<TrainingsView>();
         services.AddTransient<TournamentsView>();
         services.AddTransient<PlayersView>();
+        services.AddTransient<LeaderboardView>();
 
 
         // views datacontexts
@@ -111,6 +113,12 @@ public class App : Application
         {
             var view = new TrainingsView();
             view.DataContext = provider.GetRequiredService<TrainingsViewModel>();
+            return view;
+        });
+        services.AddTransient<LeaderboardView>(provider =>
+        {
+            var view = new LeaderboardView();
+            view.DataContext = provider.GetRequiredService<LeaderboardViewModel>();
             return view;
         });
 

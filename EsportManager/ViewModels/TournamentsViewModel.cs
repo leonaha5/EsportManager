@@ -18,7 +18,6 @@ public partial class TournamentsViewModel : ViewModelBase, IRecipient<SelectPlay
     private readonly IServiceProvider _serviceProvider;
     private readonly ITournamentService _tournamentService;
     [ObservableProperty] private Tournament? _selectedTournament;
-    [ObservableProperty] private string _title = "Tournaments";
     [ObservableProperty] private ObservableCollection<Tournament> _tournaments = [];
 
     public TournamentsViewModel(ITournamentService tournamentService, IServiceProvider serviceProvider,

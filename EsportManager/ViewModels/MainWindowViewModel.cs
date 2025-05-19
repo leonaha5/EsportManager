@@ -34,4 +34,10 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         CurrentView = _serviceProvider.GetRequiredService<TrainingsView>();
     }
+
+    [RelayCommand]
+    private void ShowLeaderboardView()
+    {
+        CurrentView = _serviceProvider.GetRequiredService<LeaderboardView>();
+    }
 }
