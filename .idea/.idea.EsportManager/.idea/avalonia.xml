@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="EsportManager/App.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Views/Leaderboard.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Views/LeaderboardView.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Views/MainWindow.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Views/PlayersView.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Views/TournamentsView.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Views/TrainingsView.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Windows/AddPlayer.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Windows/AddPlayerWindow.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Windows/AddTournament.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Windows/AddTraining.axaml" value="EsportManager/EsportManager.csproj" />
+        <entry key="EsportManager/Windows/SelectPlayer.axaml" value="EsportManager/EsportManager.csproj" />
+      </map>
+    </option>
+  </component>
+</project>
