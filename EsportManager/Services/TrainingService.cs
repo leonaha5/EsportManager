@@ -8,8 +8,8 @@ namespace EsportManager.Services;
 public interface ITrainingService
 {
     Task<IEnumerable<Training>> GetAllTrainingsAsync();
-    Task<Training> GetTrainingByIdAsync(int id);
     Task AddTrainingAsync(Training training);
+    Task DeleteTrainingAsync(Training training);
 }
 
 public class TrainingService(ITrainingCommands trainingCommands) : ITrainingService
@@ -19,13 +19,13 @@ public class TrainingService(ITrainingCommands trainingCommands) : ITrainingServ
         return await trainingCommands.GetAllAsync();
     }
 
-    public async Task<Training> GetTrainingByIdAsync(int id)
-    {
-        return await trainingCommands.GetByIdAsync(id);
-    }
-
     public async Task AddTrainingAsync(Training training)
     {
         await trainingCommands.AddAsync(training);
+    }
+
+    public async Task DeleteTrainingAsync(Training training)
+    {
+        await trainingCommands.DeleteAsync(training.Id);
     }
 }

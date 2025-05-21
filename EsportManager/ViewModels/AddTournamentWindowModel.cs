@@ -12,7 +12,7 @@ namespace EsportManager.ViewModels;
 public partial class AddTournamentWindowModel : ObservableObject
 {
     private readonly ITournamentService _tournamentService;
-    private Window _addTournamentWindow;
+    private Window? _addTournamentWindow;
     [ObservableProperty] private int _entryFee;
     [ObservableProperty] private int _minSkillRequired;
     [ObservableProperty] private string _name;
@@ -20,6 +20,7 @@ public partial class AddTournamentWindowModel : ObservableObject
 
     public AddTournamentWindowModel(ITournamentService tournamentService)
     {
+        _name = string.Empty;
         _tournamentService = tournamentService;
     }
 
@@ -43,11 +44,10 @@ public partial class AddTournamentWindowModel : ObservableObject
             MinSkillRequired = MinSkillRequired
         };
 
+        _ = HistoryService.Instance.AddRecord($"""Tournament "{Name}" Added!""");
         await _tournamentService.AddTournamentAsync(newPlayer);
-
         IMessengerExtensions.Send(WeakReferenceMessenger.Default, new TournamentAddedMessage());
-
-        _addTournamentWindow.Close();
+        _addTournamentWindow?.Close();
     }
 
     public class TournamentAddedMessage;

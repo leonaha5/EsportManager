@@ -61,11 +61,15 @@ public class PlayerService(IPlayerCommands playerCommands) : IPlayerService
 
             if (randomValue < winProbability)
             {
+                _ = HistoryService.Instance.AddRecord(
+                    $"""Player "{player.Nickname}" won with a {winProbability * 100}% chance of winning!""");
                 player.Points += _random.Next(10, 101);
                 player.Money += tournament.PrizePool;
             }
             else
             {
+                _ = HistoryService.Instance.AddRecord(
+                    $"""Player "{player.Nickname}" lost with a {winProbability * 100}% chance of winning!""");
                 player.Points = Math.Max(0, player.Points - _random.Next(10, 26));
             }
 
@@ -78,6 +82,8 @@ public class PlayerService(IPlayerCommands playerCommands) : IPlayerService
 
     public async Task TrainPlayerAsync(Player player, Training training)
     {
+        _ = HistoryService.Instance.AddRecord(
+            $"""Player "{player.Nickname}" participated in "{training.Name}" training!""");
         player.SkillLevel += training.SkillIncrease;
         player.FatigueLevel = Math.Min(100, player.FatigueLevel + training.FatigueIncrease);
         player.StressLevel = Math.Min(100, player.StressLevel + training.StressIncrease);

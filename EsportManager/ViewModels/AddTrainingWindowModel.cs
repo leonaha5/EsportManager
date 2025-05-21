@@ -11,7 +11,7 @@ namespace EsportManager.ViewModels;
 public partial class AddTrainingWindowModel : ObservableObject
 {
     private readonly ITrainingService _trainingService;
-    private Window _addTrainingWindow;
+    private Window? _addTrainingWindow;
     [ObservableProperty] private int _fatigueIncrease;
     [ObservableProperty] private string _name;
     [ObservableProperty] private int _skillIncrease;
@@ -19,6 +19,7 @@ public partial class AddTrainingWindowModel : ObservableObject
 
     public AddTrainingWindowModel(ITrainingService trainingService)
     {
+        _name = string.Empty;
         _trainingService = trainingService;
     }
 
@@ -42,11 +43,10 @@ public partial class AddTrainingWindowModel : ObservableObject
             StressIncrease = StressIncrease
         };
 
+        _ = HistoryService.Instance.AddRecord($"""Training "{Name}" Added!""");
         await _trainingService.AddTrainingAsync(newTraining);
-
         WeakReferenceMessenger.Default.Send(new TrainingAddedMessage());
-
-        _addTrainingWindow.Close();
+        _addTrainingWindow?.Close();
     }
 
     public class TrainingAddedMessage;

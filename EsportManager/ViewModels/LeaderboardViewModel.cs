@@ -1,6 +1,7 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using EsportManager.Models;
@@ -26,11 +27,11 @@ public partial class LeaderboardViewModel : ViewModelBase
         {
             var players = await _playerService.GetAllPlayersAsync();
             Players.Clear();
-            foreach (var player in players) Players.Add(player);
+            foreach (var player in players.OrderByDescending(p => p.Points)) Players.Add(player);
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Loading Players Async error!!: {ex.Message}");
+            Debug.WriteLine(ex.Message);
         }
     }
 }

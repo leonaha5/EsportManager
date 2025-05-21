@@ -9,7 +9,6 @@ namespace EsportManager.Commands;
 public interface ITournamentCommands
 {
     Task<IEnumerable<Tournament>> GetAllAsync();
-    Task<Tournament> GetByIdAsync(int id);
     Task AddAsync(Tournament tournament);
     Task DeleteAsync(int tournamentId);
 }
@@ -21,14 +20,6 @@ public class TournamentCommands(string connectionString) : ITournamentCommands
         await using var connection = new NpgsqlConnection(connectionString);
         await connection.OpenAsync();
         return await connection.QueryAsync<Tournament>("SELECT * FROM tournaments");
-    }
-
-    public async Task<Tournament> GetByIdAsync(int id)
-    {
-        await using var connection = new NpgsqlConnection(connectionString);
-        await connection.OpenAsync();
-        return await connection.QueryFirstOrDefaultAsync<Tournament>("SELECT * FROM tournaments WHERE id = @Id",
-            new { id });
     }
 
     public async Task AddAsync(Tournament tournament)

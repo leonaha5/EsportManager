@@ -12,12 +12,14 @@ namespace EsportManager.ViewModels;
 public partial class AddPlayerWindowModel : ObservableObject
 {
     private readonly IPlayerService _playerService;
-    private Window _addPlayerWindow;
+    private Window? _addPlayerWindow;
     [ObservableProperty] private string _game;
     [ObservableProperty] private string _nickname;
 
     public AddPlayerWindowModel(IPlayerService playerService)
     {
+        _game = string.Empty;
+        _nickname = string.Empty;
         _playerService = playerService;
     }
 
@@ -44,10 +46,10 @@ public partial class AddPlayerWindowModel : ObservableObject
             Points = 0,
             Money = 0
         };
-
+        _ = HistoryService.Instance.AddRecord($"""Player "{Nickname}" Added!""");
         await _playerService.AddPlayerAsync(newPlayer);
         IMessengerExtensions.Send(WeakReferenceMessenger.Default, new PlayerAddedMessage());
-        _addPlayerWindow.Close();
+        _addPlayerWindow?.Close();
     }
 
     public class PlayerAddedMessage;

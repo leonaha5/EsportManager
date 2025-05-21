@@ -3,16 +3,17 @@
         xmlns:vm="clr-namespace:EsportManager.ViewModels"
         x:Class="EsportManager.Windows.AddTraining"
         Title="Add Training Window"
+        Width="300" Height="350"
         x:DataType="vm:AddTrainingWindowModel">
-    <StackPanel Orientation="Vertical">
+    <StackPanel Orientation="Vertical" Spacing="10" Margin="10">
         <TextBlock>Name</TextBlock>
-        <TextBox Text="{Binding Name}" Watermark="Tournament Name" />
+        <TextBox Text="{Binding Name}" Watermark="Training Name" />
         <TextBlock>Skill Increase</TextBlock>
-        <TextBox Text="{Binding SkillIncrease}" Watermark="Tournament Entry Fee" />
+        <TextBox Text="{Binding SkillIncrease}" Watermark="Training Skill Increase" />
         <TextBlock>Stress Increase</TextBlock>
-        <TextBox Text="{Binding StressIncrease}" Watermark="Tournament Entry Fee" />
+        <TextBox Text="{Binding StressIncrease}" Watermark="Training Stress Increase" />
         <TextBlock>Fatigue Increase</TextBlock>
-        <TextBox Text="{Binding FatigueIncrease}" Watermark="Min Skill Required" />
+        <TextBox Text="{Binding FatigueIncrease}" Watermark="Training Fatigue Increase" />
         <Button FontSize="20" Width="200" Margin="10" CornerRadius="10" HorizontalContentAlignment="Center"
                 HorizontalAlignment="Center" Content="Add to database!"
                 Command="{Binding AddTrainingToDatabaseCommand}" />

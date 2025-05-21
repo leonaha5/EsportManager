@@ -10,18 +10,16 @@ namespace EsportManager.ViewModels;
 
 public partial class SelectPlayerWindowModel : ViewModelBase
 {
-    [ObservableProperty] private ObservableCollection<Player> _players;
+    [ObservableProperty] private ObservableCollection<Player>? _players;
     private Window? _playerSelectionWindow;
     private IPlayerService _playerService;
     [ObservableProperty] private Player? _selectedPlayer;
     private Tournament? _selectedTournament;
     private Training? _selectedTraining;
-    private ITournamentService _tournamentService;
 
-    public SelectPlayerWindowModel(IPlayerService playerService, ITournamentService tournamentService)
+    public SelectPlayerWindowModel(IPlayerService playerService)
     {
         _playerService = playerService;
-        _tournamentService = tournamentService;
     }
 
     public Tournament? SelectedTournament
@@ -41,7 +39,7 @@ public partial class SelectPlayerWindowModel : ViewModelBase
         LoadPlayersAsync();
     }
 
-    public void InitializeTraining(IPlayerService playerService, Training selectedTraining)
+    public void InitializeTraining(IPlayerService playerService, Training? selectedTraining)
     {
         _playerService = playerService;
         SelectedTraining = selectedTraining;

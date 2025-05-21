@@ -23,9 +23,10 @@ public class App : Application
         _serviceProvider = Services.BuildServiceProvider();
     }
 
-    public static IServiceCollection Services { get; private set; }
+    private static IServiceCollection? Services { get; set; }
 
-    public new static App? Current => (App)Application.Current!;
+
+    public new static App Current => (App)Application.Current!;
 
     public override void Initialize()
     {
@@ -49,7 +50,7 @@ public class App : Application
         base.OnFrameworkInitializationCompleted();
     }
 
-    public void ConfigureServices(IServiceCollection services)
+    public void ConfigureServices(IServiceCollection? services)
     {
         const string connectionString = """
                                         Host=localhost;
@@ -61,11 +62,12 @@ public class App : Application
                                         """;
 
         // commands
-        services.AddSingleton<IPlayerCommands, PlayerCommands>(provider =>
+        if (services == null) return;
+        services.AddSingleton<IPlayerCommands, PlayerCommands>(_ =>
             new PlayerCommands(connectionString));
-        services.AddSingleton<ITournamentCommands, TournamentCommands>(provider =>
+        services.AddSingleton<ITournamentCommands, TournamentCommands>(_ =>
             new TournamentCommands(connectionString));
-        services.AddSingleton<ITrainingCommands, TrainingCommands>(provider =>
+        services.AddSingleton<ITrainingCommands, TrainingCommands>(_ =>
             new TrainingCommands(connectionString));
 
 
@@ -73,6 +75,7 @@ public class App : Application
         services.AddSingleton<IPlayerService, PlayerService>();
         services.AddSingleton<ITournamentService, TournamentService>();
         services.AddSingleton<ITrainingService, TrainingService>();
+        services.AddSingleton<HistoryService>();
 
 
         // view or window models
@@ -85,6 +88,7 @@ public class App : Application
         services.AddTransient<TrainingsViewModel>();
         services.AddTransient<AddTrainingWindowModel>();
         services.AddTransient<LeaderboardViewModel>();
+        services.AddTransient<HistoryViewModel>();
 
 
         // views
@@ -92,6 +96,7 @@ public class App : Application
         services.AddTransient<TournamentsView>();
         services.AddTransient<PlayersView>();
         services.AddTransient<LeaderboardView>();
+        services.AddTransient<HistoryView>();
 
 
         // views datacontexts
@@ -121,9 +126,15 @@ public class App : Application
             view.DataContext = provider.GetRequiredService<LeaderboardViewModel>();
             return view;
         });
+        services.AddTransient<HistoryView>(provider =>
+        {
+            var view = new HistoryView();
+            view.DataContext = provider.GetRequiredService<HistoryViewModel>();
+            return view;
+        });
 
         // database
-        services.AddSingleton<DatabaseCommands>(provider => new DatabaseCommands(connectionString));
+        services.AddSingleton<DatabaseCommands>(_ => new DatabaseCommands(connectionString));
 
 
         // windows
@@ -133,7 +144,7 @@ public class App : Application
         services.AddTransient<AddTraining>();
     }
 
-    public T GetService<T>()
+    public T GetService<T>() where T : notnull
     {
         return _serviceProvider.GetRequiredService<T>();
     }

@@ -54,10 +54,10 @@
         </ListBox>
         <StackPanel Orientation="Horizontal">
             <Button x:Name="AddPlayerButton" FontSize="20" Width="250" Margin="10" CornerRadius="10"
-                    HorizontalContentAlignment="Center" Content="Add new player"
+                    HorizontalContentAlignment="Center" Content="Add Player"
                     Command="{Binding AddPlayerWindowCommand}" />
             <Button x:Name="DeletePlayerButton" FontSize="20" Width="250" Margin="10" CornerRadius="10"
-                    HorizontalContentAlignment="Center" Content="Delete selected player"
+                    HorizontalContentAlignment="Center" Content="Delete"
                     Command="{Binding DeletePlayerFromDatabaseCommand}" />
         </StackPanel>
     </StackPanel>

@@ -9,8 +9,8 @@ namespace EsportManager.Commands;
 public interface ITrainingCommands
 {
     Task<IEnumerable<Training>> GetAllAsync();
-    Task<Training> GetByIdAsync(int id);
     Task AddAsync(Training training);
+    Task DeleteAsync(int trainingId);
 }
 
 public class TrainingCommands(string connectionString) : ITrainingCommands
@@ -22,14 +22,6 @@ public class TrainingCommands(string connectionString) : ITrainingCommands
         return await connection.QueryAsync<Training>("SELECT * FROM trainings");
     }
 
-    public async Task<Training> GetByIdAsync(int trainingId)
-    {
-        await using var connection = new NpgsqlConnection(connectionString);
-        await connection.OpenAsync();
-        return await connection.QueryFirstOrDefaultAsync<Training>("SELECT * FROM trainings WHERE id = @id",
-            new { id = trainingId });
-    }
-
     public async Task AddAsync(Training training)
     {
         await using var connection = new NpgsqlConnection(connectionString);
@@ -37,5 +29,12 @@ public class TrainingCommands(string connectionString) : ITrainingCommands
         await connection.ExecuteAsync(
             "INSERT INTO trainings (name, skillincrease, fatigueincrease, stressincrease) VALUES (@Name, @SkillIncrease, @FatigueIncrease, @StressIncrease)",
             training);
+    }
+
+    public async Task DeleteAsync(int id)
+    {
+        await using var connection = new NpgsqlConnection(connectionString);
+        await connection.OpenAsync();
+        await connection.ExecuteAsync("DELETE FROM trainings WHERE id = @Id", new { Id = id });
     }
 }

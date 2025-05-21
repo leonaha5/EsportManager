@@ -49,6 +49,7 @@ public partial class TournamentsViewModel : ViewModelBase, IRecipient<SelectPlay
     private async Task DeleteTournamentFromDatabase()
     {
         if (SelectedTournament is null) return;
+        _ = HistoryService.Instance.AddRecord($"""Tournament "{SelectedTournament.Name}" Deleted!""");
         await _tournamentService.DeleteTournamentAsync(SelectedTournament);
         Tournaments.Clear();
         await LoadTournamentAsync();

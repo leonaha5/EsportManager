@@ -44,6 +44,8 @@ public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindo
     private async Task DeletePlayerFromDatabase()
     {
         if (SelectedPlayer is null) return;
+
+        _ = HistoryService.Instance.AddRecord($"""Player "{SelectedPlayer.Nickname}" Deleted! Bye!""");
         await _playerService.DeletePlayerAsync(SelectedPlayer.Id);
         Players.Clear();
         await LoadPlayersAsync();
@@ -63,7 +65,7 @@ public partial class PlayersViewModel : ViewModelBase, IRecipient<AddPlayerWindo
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Loading Players Async error!!: {ex.Message}");
+            Debug.WriteLine(ex.Message);
         }
     }
 

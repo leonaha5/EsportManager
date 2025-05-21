@@ -40,4 +40,10 @@ public partial class MainWindowViewModel : ViewModelBase
     {
         CurrentView = _serviceProvider.GetRequiredService<LeaderboardView>();
     }
+
+    [RelayCommand]
+    private void ShowHistoryView()
+    {
+        CurrentView = _serviceProvider.GetRequiredService<HistoryView>();
+    }
 }
